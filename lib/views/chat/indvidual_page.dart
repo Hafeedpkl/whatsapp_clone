@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/model/chat_model.dart';
@@ -152,7 +154,7 @@ class _IndividualGroupState extends State<IndividualGroup> {
                                       },
                                       icon: const Icon(
                                         Icons.emoji_emotions_outlined,
-                                        color: Color(0xFF128C7E),
+                                        color: Colors.grey,
                                       ),
                                     ),
                                     suffixIcon: Row(
@@ -161,14 +163,22 @@ class _IndividualGroupState extends State<IndividualGroup> {
                                         IconButton(
                                           icon: const Icon(
                                             Icons.attach_file_outlined,
-                                            color: Color(0xFF128C7E),
+                                            color: Colors.grey,
                                           ),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            showModalBottomSheet(
+                                              backgroundColor:
+                                                  Colors.transparent,
+                                              context: context,
+                                              builder: (context) =>
+                                                  bottomSheet(),
+                                            );
+                                          },
                                         ),
                                         IconButton(
                                           icon: const Icon(
                                             Icons.camera_alt_rounded,
-                                            color: Color(0xFF128C7E),
+                                            color: Colors.grey,
                                           ),
                                           onPressed: () {},
                                         ),
@@ -195,6 +205,97 @@ class _IndividualGroupState extends State<IndividualGroup> {
             ),
           ]),
         ),
+      ),
+    );
+  }
+
+  Widget bottomSheet() {
+    return Container(
+      height: 278,
+      width: MediaQuery.of(context).size.width,
+      child: Card(
+        margin: EdgeInsets.all(18),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    iconcreation(
+                        color: Colors.indigo,
+                        icon: Icons.insert_drive_file,
+                        text: 'Document'),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    iconcreation(
+                        color: Colors.pink,
+                        icon: Icons.camera_alt,
+                        text: 'Camera'),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    iconcreation(
+                        color: Colors.purple,
+                        icon: Icons.insert_photo,
+                        text: 'Gallery'),
+                  ],
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    iconcreation(
+                        color: Colors.orange,
+                        icon: Icons.headphones,
+                        text: 'Audio'),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    iconcreation(
+                        color: Colors.green,
+                        icon: Icons.location_pin,
+                        text: 'Location'),
+                    const SizedBox(
+                      width: 40,
+                    ),
+                    iconcreation(
+                        color: Colors.blue,
+                        icon: Icons.person,
+                        text: 'Contact'),
+                  ],
+                ),
+              ]),
+        ),
+      ),
+    );
+  }
+
+  Widget iconcreation(
+      {required IconData icon, required Color color, required String text}) {
+    return InkWell(
+      onTap: () {
+        log('clicked');
+      },
+      child: Column(
+        children: [
+          CircleAvatar(
+            backgroundColor: color,
+            radius: 30,
+            child: Icon(
+              icon,
+              color: Colors.white,
+            ),
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            text,
+            style: TextStyle(fontSize: 12),
+          )
+        ],
       ),
     );
   }

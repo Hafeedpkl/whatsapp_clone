@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/model/chat_model.dart';
 import 'package:whatsapp_clone/views/chat/indvidual_page.dart';
+import 'package:whatsapp_clone/views/select_contact/select_contact.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -46,7 +47,13 @@ class _ChatScreenState extends State<ChatScreen> {
         itemCount: chats.length,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Selectcontact(),
+              ));
+        },
         child: const Icon(Icons.chat),
       ),
     );
