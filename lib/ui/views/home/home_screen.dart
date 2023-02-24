@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/views/calls/call_screen.dart';
-import 'package:whatsapp_clone/views/camera/camera_screen.dart';
-import 'package:whatsapp_clone/views/chat/view/chat_screen.dart';
-import 'package:whatsapp_clone/views/status/status_screen.dart';
+import 'package:whatsapp_clone/ui/views/calls/call_screen.dart';
+import 'package:whatsapp_clone/ui/views/camera/camera_screen.dart';
+import 'package:whatsapp_clone/ui/views/chat/view/chat_screen.dart';
+import 'package:whatsapp_clone/ui/views/status/status_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

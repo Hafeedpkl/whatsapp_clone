@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/model/chat_model.dart';
-import 'package:whatsapp_clone/views/chat/indvidual_page.dart';
-import 'package:whatsapp_clone/views/select_contact/select_contact.dart';
+import 'package:whatsapp_clone/ui/views/chat/indvidual_page.dart';
+import 'package:whatsapp_clone/ui/views/select_contact/select_contact.dart';
+
+import '../../../custom_ui/custom_card.dart';
 
 class ChatScreen extends StatefulWidget {
   const ChatScreen({super.key});
@@ -56,41 +58,6 @@ class _ChatScreenState extends State<ChatScreen> {
         },
         child: const Icon(Icons.chat),
       ),
-    );
-  }
-}
-
-class CustomCard extends StatelessWidget {
-  const CustomCard({super.key, required this.list});
-  final ChatModel list;
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      onTap: () {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => IndividualGroup(
-                chatModel: list,
-              ),
-            ));
-      },
-      leading: CircleAvatar(
-        backgroundColor: Colors.grey,
-        radius: 30,
-        child: Icon(
-          list.isGroup == false ? Icons.person : Icons.groups_2,
-          color: Colors.white,
-        ),
-      ),
-      title: Text(list.name.toString()),
-      subtitle: Row(
-        children: [
-          const Icon(Icons.done_all_rounded),
-          Text(list.currentMessage.toString())
-        ],
-      ),
-      trailing: Text(list.time.toString()),
     );
   }
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:whatsapp_clone/views/home/home_screen.dart';
+import 'package:whatsapp_clone/ui/views/home/home_screen.dart';
 
 void main() {
   runApp(const MyApp());
