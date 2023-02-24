@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter/src/widgets/placeholder.dart';
+import 'package:whatsapp_clone/model/chat_model.dart';
+import 'package:whatsapp_clone/ui/custom_ui/button_card.dart';
 import 'package:whatsapp_clone/ui/custom_ui/contact_card.dart';
+
+import '../create_group/create_group.dart';
 
 class Selectcontact extends StatefulWidget {
   const Selectcontact({super.key});
@@ -13,6 +15,12 @@ class Selectcontact extends StatefulWidget {
 class _SelectcontactState extends State<Selectcontact> {
   @override
   Widget build(BuildContext context) {
+    List<ChatModel> contacts = [
+      ChatModel(name: "hafeed", status: 'flutter developer'),
+      ChatModel(name: "muhammed", status: 'flutter developer'),
+      ChatModel(name: "john", status: 'node js developer'),
+      ChatModel(name: "Rohan", status: 'python developer'),
+    ];
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color(0xFF075E54),
@@ -58,8 +66,32 @@ class _SelectcontactState extends State<Selectcontact> {
         ],
       ),
       body: ListView.builder(
-        itemBuilder: (context, index) => ContactCard(),
-        itemCount: 20,
+        itemBuilder: (context, index) {
+          if (index == 0) {
+            return InkWell(
+              onTap: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => CreateGroup(),
+                    ));
+              },
+              child: ButtonCard(
+                icon: Icons.group,
+                name: 'New Group',
+              ),
+            );
+          } else if (index == 1) {
+            return ButtonCard(
+              icon: Icons.person_add,
+              name: 'New Contact',
+            );
+          }
+          return ContactCard(
+            contact: contacts[index - 2],
+          );
+        },
+        itemCount: contacts.length + 2,
       ),
     );
   }
