@@ -10,7 +10,7 @@ class AvatarCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6, horizontal: 8),
-      child: Column(
+      child: Column( 
         children: [
           Stack(
             children: [

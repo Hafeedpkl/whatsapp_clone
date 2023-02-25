@@ -29,7 +29,14 @@ class CustomCard extends StatelessWidget {
       title: Text(list.name.toString()),
       subtitle: Row(
         children: [
-          const Icon(Icons.done_all_rounded),
+          const Icon(
+            Icons.done_all_rounded,
+            size: 17,
+            color: Colors.blue,
+          ),
+          SizedBox(
+            width: 3,
+          ),
           Text(list.currentMessage.toString())
         ],
       ),
