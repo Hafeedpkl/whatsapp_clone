@@ -1,6 +1,6 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/ui/views/camera/camera_screen.dart';
+import 'package:whatsapp_clone/ui/views/camera/view/camera_screen.dart';
 import 'package:whatsapp_clone/ui/views/home/home_screen.dart';
 
 void main() async {

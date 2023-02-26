@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:whatsapp_clone/ui/views/camera/camera_screen.dart';
+import 'package:whatsapp_clone/ui/views/camera/view/camera_screen.dart';
 
 class CameraPage extends StatelessWidget {
   const CameraPage({super.key});

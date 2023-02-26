@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/ui/views/calls/call_screen.dart';
-import 'package:whatsapp_clone/ui/views/camera/camera_screen.dart';
+import 'package:whatsapp_clone/ui/views/camera/view/camera_screen.dart';
 import 'package:whatsapp_clone/ui/views/chat/view/chat_screen.dart';
 import 'package:whatsapp_clone/ui/views/status/status_screen.dart';
 
