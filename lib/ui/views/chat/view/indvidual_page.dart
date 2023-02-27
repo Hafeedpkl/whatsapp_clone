@@ -6,6 +6,7 @@ import 'package:whatsapp_clone/model/chat_model.dart';
 import 'package:flutter/foundation.dart' as foundation;
 import 'package:whatsapp_clone/ui/custom_ui/own_message_card.dart';
 import 'package:whatsapp_clone/ui/custom_ui/reply_card.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualGroup extends StatefulWidget {
   const IndividualGroup({super.key, required this.chatModel});
@@ -18,9 +19,13 @@ class IndividualGroup extends StatefulWidget {
 class _IndividualGroupState extends State<IndividualGroup> {
   bool show = false;
   FocusNode focusNode = FocusNode();
+  late IO.Socket socket;
+  bool? sendButton;
   TextEditingController controller = TextEditingController();
   @override
   void initState() {
+    super.initState();
+    connect();
     focusNode.addListener(() {
       if (focusNode.hasFocus) {
         setState(() {
@@ -28,7 +33,17 @@ class _IndividualGroupState extends State<IndividualGroup> {
         });
       }
     });
-    super.initState();
+  }
+
+  void connect() {
+    socket = IO.io("http://10.4.4.12:5000", <String, dynamic>{
+      "transports": ["websocket"],
+      "autoconnect": false,
+    });
+    socket.connect();
+    socket.onConnect((data) => print('connected'));
+    print(socket.connected);
+    socket.emit("/test", "Hello world");
   }
 
   @override
@@ -172,6 +187,17 @@ class _IndividualGroupState extends State<IndividualGroup> {
                                     keyboardType: TextInputType.multiline,
                                     maxLines: 5,
                                     minLines: 1,
+                                    onChanged: (value) {
+                                      if (value.length > 0) {
+                                        setState(() {
+                                          sendButton = true;
+                                        });
+                                      } else {
+                                        setState(() {
+                                          sendButton = false;
+                                        });
+                                      }
+                                    },
                                     decoration: InputDecoration(
                                         border: InputBorder.none,
                                         hintText: 'Type a message',
@@ -226,7 +252,10 @@ class _IndividualGroupState extends State<IndividualGroup> {
                               backgroundColor: const Color(0xFF128C7E),
                               child: IconButton(
                                 onPressed: () {},
-                                icon: const Icon(Icons.mic),
+                                icon: Icon(
+                                  sendButton == true ? Icons.send : Icons.mic,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           )

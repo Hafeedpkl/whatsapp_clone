@@ -2,6 +2,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/ui/views/camera/view/camera_screen.dart';
 import 'package:whatsapp_clone/ui/views/home/home_screen.dart';
+import 'package:whatsapp_clone/ui/views/login/login_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -24,7 +25,7 @@ class MyApp extends StatelessWidget {
         colorScheme:
             ColorScheme.fromSwatch().copyWith(secondary: Color(0xFF128C7E)),
       ),
-      home: HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
