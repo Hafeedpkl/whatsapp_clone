@@ -4,8 +4,9 @@ import '../../model/chat_model.dart';
 import '../views/chat/view/indvidual_page.dart';
 
 class CustomCard extends StatelessWidget {
-  const CustomCard({super.key, required this.list});
+  const CustomCard({super.key, required this.list, required this.sourcechat});
   final ChatModel list;
+  final ChatModel sourcechat;
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -15,6 +16,7 @@ class CustomCard extends StatelessWidget {
             MaterialPageRoute(
               builder: (context) => IndividualGroup(
                 chatModel: list,
+                sourceChat: sourcechat,
               ),
             ));
       },

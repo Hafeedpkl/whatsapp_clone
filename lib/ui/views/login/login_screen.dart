@@ -51,11 +51,11 @@ class _LoginScreenState extends State<LoginScreen> {
       body: ListView.builder(
         itemBuilder: (context, index) => InkWell(
             onTap: () {
-              chatmodels.removeAt(index);
+             sourceChat= chatmodels.removeAt(index);
               Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => HomeScreen(chatModel: chatmodels),
+                    builder: (context) => HomeScreen(chatModel: chatmodels,sourceChat: sourceChat!),
                   ));
             },
             child:

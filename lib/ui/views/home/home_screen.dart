@@ -6,8 +6,10 @@ import 'package:whatsapp_clone/ui/views/chat/view/chat_screen.dart';
 import 'package:whatsapp_clone/ui/views/status/status_screen.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key,required this.chatModel});
-  final List<ChatModel >chatModel;
+  const HomeScreen(
+      {super.key, required this.chatModel, required this.sourceChat});
+  final List<ChatModel> chatModel;
+  final ChatModel sourceChat;
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
@@ -76,9 +78,10 @@ class _HomeScreenState extends State<HomeScreen>
             ],
           ),
         ),
-        body: TabBarView(controller: controller, children:  [
+        body: TabBarView(controller: controller, children: [
           const CameraScreen(),
-          ChatScreen(chatmodels: widget.chatModel),
+          ChatScreen(
+              chatmodels: widget.chatModel, sourceChat: widget.sourceChat),
           const StatusScreen(),
           const CallScreen()
         ]));

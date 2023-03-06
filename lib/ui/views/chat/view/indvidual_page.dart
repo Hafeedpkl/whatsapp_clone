@@ -4,14 +4,16 @@ import 'package:emoji_picker_flutter/emoji_picker_flutter.dart';
 import 'package:flutter/material.dart';
 import 'package:whatsapp_clone/model/chat_model.dart';
 import 'package:flutter/foundation.dart' as foundation;
+import 'package:whatsapp_clone/model/message_model.dart';
 import 'package:whatsapp_clone/ui/custom_ui/own_message_card.dart';
 import 'package:whatsapp_clone/ui/custom_ui/reply_card.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class IndividualGroup extends StatefulWidget {
-  const IndividualGroup({super.key, required this.chatModel});
+  const IndividualGroup(
+      {super.key, required this.chatModel, required this.sourceChat});
   final ChatModel chatModel;
-
+  final ChatModel sourceChat;
   @override
   State<IndividualGroup> createState() => _IndividualGroupState();
 }
@@ -21,6 +23,7 @@ class _IndividualGroupState extends State<IndividualGroup> {
   FocusNode focusNode = FocusNode();
   late IO.Socket socket;
   bool? sendButton;
+  List<MessageModel> messages = [];
   TextEditingController controller = TextEditingController();
   @override
   void initState() {
@@ -38,12 +41,36 @@ class _IndividualGroupState extends State<IndividualGroup> {
   void connect() {
     socket = IO.io("http://10.4.4.12:5000", <String, dynamic>{
       "transports": ["websocket"],
-      "autoconnect": false,
+      "autoConnect": false,
     });
     socket.connect();
-    socket.onConnect((data) => print('connected'));
+    socket.onConnect(
+      (data) {
+        print('connected');
+        socket.on("message", (msg) {
+          log(msg);
+          setMessage("destination", msg["message"]);
+        });
+      },
+    );
+    socket.emit("signin", widget.sourceChat.id);
+    socket.onDisconnect((_) => print('Connection Disconnection'));
+    socket.onConnectError((err) => print('onCerr ' + err));
+    socket.onError((err) => print('err ' + err));
     print(socket.connected);
-    socket.emit("/test", "Hello world");
+  }
+
+  void sendMessage(String message, int sourceId, int targetId) {
+    setMessage("source", message);
+    socket.emit("message",
+        {"message": message, "sourceId": sourceId, "targetid": targetId});
+  }
+
+  void setMessage(String type, String message) {
+    MessageModel messageModel = MessageModel(type: type, message: message);
+    setState(() {
+      messages.add(messageModel);
+    });
   }
 
   @override
@@ -149,22 +176,16 @@ class _IndividualGroupState extends State<IndividualGroup> {
               child: Stack(children: [
                 Container(
                   height: size.height - 140,
-                  child: ListView(
+                  child: ListView.builder(
                     shrinkWrap: true,
-                    children: const [
-                      OwnMessageCard(),
-                      ReplyCard(),
-                      OwnMessageCard(),
-                      ReplyCard(),
-                      OwnMessageCard(),
-                      ReplyCard(),
-                      OwnMessageCard(),
-                      ReplyCard(),
-                      OwnMessageCard(),
-                      ReplyCard(),
-                      OwnMessageCard(),
-                      ReplyCard(),
-                    ],
+                    itemCount: messages.length,
+                    itemBuilder: (context, index) {
+                      if (messages[index].type == "source") {
+                        return OwnMessageCard();
+                      } else {
+                        return ReplyCard();
+                      }
+                    },
                   ),
                 ),
                 Align(
@@ -251,7 +272,15 @@ class _IndividualGroupState extends State<IndividualGroup> {
                               radius: 25,
                               backgroundColor: const Color(0xFF128C7E),
                               child: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  if (sendButton == true) {
+                                    sendMessage(
+                                        controller.text,
+                                        widget.sourceChat.id!,
+                                        widget.chatModel.id!);
+                                    controller.clear();
+                                  }
+                                },
                                 icon: Icon(
                                   sendButton == true ? Icons.send : Icons.mic,
                                   color: Colors.white,

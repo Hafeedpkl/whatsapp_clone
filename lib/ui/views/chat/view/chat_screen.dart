@@ -5,8 +5,10 @@ import '../../../../model/chat_model.dart';
 import '../../../custom_ui/custom_card.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key, required this.chatmodels});
+  const ChatScreen(
+      {super.key, required this.chatmodels, required this.sourceChat});
   final List<ChatModel> chatmodels;
+  final ChatModel sourceChat;
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -18,7 +20,10 @@ class _ChatScreenState extends State<ChatScreen> {
     return Scaffold(
       body: ListView.builder(
         itemBuilder: (context, index) {
-          return CustomCard(list: widget.chatmodels[index]);
+          return CustomCard(
+            list: widget.chatmodels[index],
+            sourcechat: widget.sourceChat,
+          );
         },
         itemCount: widget.chatmodels.length,
       ),
